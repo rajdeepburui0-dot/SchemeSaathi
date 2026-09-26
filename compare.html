@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Compare Schemes | SchemeSaathi</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+                <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <span>
+                Scheme<span class="logo-highlight">
+                    Saathi
+                </span>
+            </span>
+
+        </a>
+
+
+        <a href="results.html"
+           class="nav-button">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Results
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     COMPARISON PAGE
+========================================= -->
+
+<main class="compare-page">
+
+    <div class="container compare-container">
+
+
+        <!-- PAGE HEADER -->
+
+        <section class="compare-header">
+
+            <span class="section-label">
+                SCHEME COMPARISON
+            </span>
+
+            <h1>
+                Compare schemes side by side.
+            </h1>
+
+            <p>
+                Compare important details to understand
+                which government schemes may fit your
+                business requirements.
+            </p>
+
+        </section>
+
+
+
+        <!-- SCHEME SELECTOR -->
+
+        <section class="compare-selector">
+
+            <div class="compare-selector-header">
+
+                <div>
+
+                    <h2>
+                        Select Schemes
+                    </h2>
+
+                    <p>
+                        Choose two or more schemes to compare.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="schemeSelector"
+                 class="scheme-selector">
+
+            </div>
+
+
+            <button id="compareButton"
+                    class="primary-button compare-button">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+
+                Compare Selected Schemes
+
+            </button>
+
+        </section>
+
+
+
+        <!-- COMPARISON RESULT -->
+
+        <section id="comparisonSection"
+                 class="comparison-section"
+                 style="display:none;">
+
+
+            <div class="comparison-title">
+
+                <div>
+
+                    <span class="section-label">
+                        SIDE-BY-SIDE COMPARISON
+                    </span>
+
+                    <h2>
+                        Scheme Comparison
+                    </h2>
+
+                </div>
+
+
+                <button id="clearComparison"
+                        class="secondary-button">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Clear
+
+                </button>
+
+            </div>
+
+
+            <div class="comparison-table-wrapper">
+
+                <table class="comparison-table">
+
+                    <thead id="comparisonHead">
+
+                    </thead>
+
+                    <tbody id="comparisonBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- EMPTY STATE -->
+
+        <section id="compareEmpty"
+                 class="compare-empty">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+
+            </div>
+
+            <h3>
+                Select schemes to compare
+            </h3>
+
+            <p>
+                Choose at least two schemes above
+                to see their benefits, eligibility,
+                requirements and match scores side by side.
+            </p>
+
+        </section>
+
+
+
+        <!-- BACK -->
+
+        <div class="details-back">
+
+            <a href="results.html"
+               class="secondary-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to All Schemes
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+        <div class="footer-brand">
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+
+                    <i class="fa-solid fa-handshake"></i>
+
+                </div>
+
+                <span>
+                    Scheme<span class="logo-highlight">
+                        Saathi
+                    </span>
+                </span>
+
+            </a>
+
+
+            <p>
+                AI-driven scheme matching for
+                marginalized entrepreneurs.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 SchemeSaathi
+            </span>
+
+            <span>
+                Frontend Prototype
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<script src="compare.js"></script>
+
+</body>
+
+</html>

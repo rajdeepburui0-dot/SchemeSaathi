@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Create Profile | SchemeSaathi</title>
+
+<link rel="stylesheet"
+      href="style.css">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+```
+
+</head>
+
+<body>
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+```
+<div class="container nav-container">
+
+    <a href="index.html"
+       class="logo">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-handshake"></i>
+        </div>
+
+        <span>
+            Scheme<span class="logo-highlight">
+                Saathi
+            </span>
+        </span>
+
+    </a>
+
+
+    <a href="index.html"
+       class="nav-button">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back Home
+
+    </a>
+
+</div>
+```
+
+</header>
+
+<!-- =========================================
+     PROFILE PAGE
+========================================= -->
+
+<main class="profile-page">
+
+```
+<div class="container profile-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="profile-heading">
+
+        <span class="section-label">
+            STEP 1 OF 2
+        </span>
+
+        <h1>
+            Tell us about yourself.
+        </h1>
+
+        <p>
+            Your information helps SchemeSaathi
+            identify government schemes that may
+            be relevant to you.
+        </p>
+
+    </div>
+
+
+
+    <!-- PROGRESS -->
+
+    <div class="profile-progress">
+
+        <div class="progress-track">
+
+            <div class="progress-fill"></div>
+
+        </div>
+
+        <div class="progress-labels">
+
+            <span class="active">
+                Your Profile
+            </span>
+
+            <span>
+                Scheme Matching
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FORM -->
+
+    <form id="profileForm"
+          class="profile-form">
+
+
+        <!-- =================================
+             PERSONAL DETAILS
+        ================================== -->
+
+        <section class="profile-section">
+
+            <div class="profile-section-header">
+
+                <div class="section-icon">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Personal Details
+                    </h2>
+
+                    <p>
+                        Basic information about you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- AGE -->
+
+                <div class="form-group">
+
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        name="age"
+                        placeholder="Enter your age"
+                        min="18"
+                        max="100"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- GENDER -->
+
+                <div class="form-group">
+
+                    <label for="gender">
+                        Gender
+                    </label>
+
+                    <select
+                        id="gender"
+                        name="gender"
+                        required
+                    >
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="male">
+                            Male
+                        </option>
+
+                        <option value="female">
+                            Female
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                        <option value="prefer-not">
+                            Prefer not to say
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- STATE -->
+
+                <div class="form-group">
+
+                    <label for="state">
+                        State
+                    </label>
+
+                    <select
+                        id="state"
+                        name="state"
+                        required
+                    >
+
+                        <option value="">
+                            Select your state
+                        </option>
+
+                        <option value="west-bengal">
+                            West Bengal
+                        </option>
+
+                        <option value="odisha">
+                            Odisha
+                        </option>
+
+                        <option value="bihar">
+                            Bihar
+                        </option>
+
+                        <option value="jharkhand">
+                            Jharkhand
+                        </option>
+
+                        <option value="assam">
+                            Assam
+                        </option>
+
+                        <option value="delhi">
+                            Delhi
+                        </option>
+
+                        <option value="maharashtra">
+                            Maharashtra
+                        </option>
+
+                        <option value="uttar-pradesh">
+                            Uttar Pradesh
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group full-width">
+
+                    <label for="category">
+                        Social / Entrepreneur Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select your category
+                        </option>
+
+                        <option value="sc">
+                            Scheduled Caste (SC)
+                        </option>
+
+                        <option value="st">
+                            Scheduled Tribe (ST)
+                        </option>
+
+                        <option value="obc">
+                            Other Backward Class (OBC)
+                        </option>
+
+                        <option value="minority">
+                            Minority Community
+                        </option>
+
+                        <option value="women">
+                            Woman Entrepreneur
+                        </option>
+
+                        <option value="person-with-disability">
+                            Person with Disability
+                        </option>
+
+                        <option value="general">
+                            General
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ANNUAL FAMILY INCOME -->
+
+                <div class="form-group full-width">
+
+                    <label for="annualIncome">
+                        Annual Family Income
+                    </label>
+
+                    <select
+                        id="annualIncome"
+                        name="annualIncome"
+                        required
+                    >
+
+                        <option value="">
+                            Select annual family income
+                        </option>
+
+                        <option value="below-1l">
+                            Below ₹1 Lakh
+                        </option>
+
+                        <option value="1-2.5l">
+                            ₹1 – ₹2.5 Lakh
+                        </option>
+
+                        <option value="2.5-5l">
+                            ₹2.5 – ₹5 Lakh
+                        </option>
+
+                        <option value="5-8l">
+                            ₹5 – ₹8 Lakh
+                        </option>
+
+                        <option value="8-10l">
+                            ₹8 – ₹10 Lakh
+                        </option>
+
+                        <option value="above-10l">
+                            Above ₹10 Lakh
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             BUSINESS DETAILS
+        ================================== -->
+
+        <section class="profile-section">
+
+            <div class="profile-section-header">
+
+                <div class="section-icon">
+
+                    <i class="fa-solid fa-store"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Business Details
+                    </h2>
+
+                    <p>
+                        Tell us about your business.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <!-- BUSINESS NAME -->
+
+                <div class="form-group">
+
+                    <label for="businessName">
+                        Business Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="businessName"
+                        name="businessName"
+                        placeholder="Enter business name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BUSINESS TYPE -->
+
+                <div class="form-group">
+
+                    <label for="businessType">
+                        Business Type
+                    </label>
+
+                    <select
+                        id="businessType"
+                        name="businessType"
+                        required
+                    >
+
+                        <option value="">
+                            Select business type
+                        </option>
+
+                        <option value="manufacturing">
+                            Manufacturing
+                        </option>
+
+                        <option value="retail">
+                            Retail
+                        </option>
+
+                        <option value="service">
+                            Service
+                        </option>
+
+                        <option value="agriculture">
+                            Agriculture
+                        </option>
+
+                        <option value="food">
+                            Food & Food Processing
+                        </option>
+
+                        <option value="technology">
+                            Technology
+                        </option>
+
+                        <option value="handicraft">
+                            Handicraft
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BUSINESS STAGE -->
+
+                <div class="form-group">
+
+                    <label for="businessStage">
+                        Business Stage
+                    </label>
+
+                    <select
+                        id="businessStage"
+                        name="businessStage"
+                        required
+                    >
+
+                        <option value="">
+                            Select stage
+                        </option>
+
+                        <option value="idea">
+                            Business Idea
+                        </option>
+
+                        <option value="startup">
+                            Startup
+                        </option>
+
+                        <option value="existing">
+                            Existing Business
+                        </option>
+
+                        <option value="expansion">
+                            Looking to Expand
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- EMPLOYEES -->
+
+                <div class="form-group">
+
+                    <label for="employees">
+                        Number of Employees
+                    </label>
+
+                    <input
+                        type="number"
+                        id="employees"
+                        name="employees"
+                        placeholder="e.g. 5"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TURNOVER -->
+
+                <div class="form-group full-width">
+
+                    <label for="annualTurnover">
+                        Approximate Annual Turnover
+                    </label>
+
+                    <select
+                        id="annualTurnover"
+                        name="annualTurnover"
+                        required
+                    >
+
+                        <option value="">
+                            Select turnover range
+                        </option>
+
+                        <option value="below-1l">
+                            Below ₹1 Lakh
+                        </option>
+
+                        <option value="1-5l">
+                            ₹1 – ₹5 Lakh
+                        </option>
+
+                        <option value="5-10l">
+                            ₹5 – ₹10 Lakh
+                        </option>
+
+                        <option value="10-25l">
+                            ₹10 – ₹25 Lakh
+                        </option>
+
+                        <option value="25l-1cr">
+                            ₹25 Lakh – ₹1 Crore
+                        </option>
+
+                        <option value="above-1cr">
+                            Above ₹1 Crore
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             SUPPORT REQUIRED
+        ================================== -->
+
+        <section class="profile-section">
+
+            <div class="profile-section-header">
+
+                <div class="section-icon">
+
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        What Support Do You Need?
+                    </h2>
+
+                    <p>
+                        Select the areas where you need help.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="support-grid">
+
+
+                <!-- FINANCE -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="finance"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    </div>
+
+                    <strong>
+                        Financial Support
+                    </strong>
+
+                    <span>
+                        Loans, subsidies & funding
+                    </span>
+
+                </label>
+
+
+                <!-- TRAINING -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="training"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <strong>
+                        Training
+                    </strong>
+
+                    <span>
+                        Skills & entrepreneurship training
+                    </span>
+
+                </label>
+
+
+                <!-- MARKET -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="market"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                    </div>
+
+                    <strong>
+                        Market Access
+                    </strong>
+
+                    <span>
+                        Customers & market opportunities
+                    </span>
+
+                </label>
+
+
+                <!-- EQUIPMENT -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="equipment"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-gears"></i>
+
+                    </div>
+
+                    <strong>
+                        Equipment
+                    </strong>
+
+                    <span>
+                        Machinery & infrastructure
+                    </span>
+
+                </label>
+
+
+                <!-- DIGITAL -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="digital"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-laptop"></i>
+
+                    </div>
+
+                    <strong>
+                        Digital Support
+                    </strong>
+
+                    <span>
+                        Technology & digital tools
+                    </span>
+
+                </label>
+
+
+                <!-- OTHER -->
+
+                <label class="support-card">
+
+                    <input
+                        type="checkbox"
+                        name="support"
+                        value="other"
+                    >
+
+                    <div class="support-icon">
+
+                        <i class="fa-solid fa-ellipsis"></i>
+
+                    </div>
+
+                    <strong>
+                        Other
+                    </strong>
+
+                    <span>
+                        Other business requirements
+                    </span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             SUBMIT
+        ================================== -->
+
+        <div class="profile-submit">
+
+            <div class="privacy-note">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <span>
+                    Your information is stored locally
+                    for this prototype.
+                </span>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button profile-submit-button"
+            >
+
+                Find My Schemes
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+```
+
+</main>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+```
+<div class="container footer-container">
+
+    <div class="footer-brand">
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-handshake"></i>
+
+            </div>
+
+            <span>
+                Scheme<span class="logo-highlight">
+                    Saathi
+                </span>
+            </span>
+
+        </a>
+
+        <p>
+            AI-driven scheme matching for
+            marginalized entrepreneurs.
+        </p>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 SchemeSaathi
+        </span>
+
+        <span>
+            Frontend Prototype
+        </span>
+
+    </div>
+
+</div>
+```
+
+</footer>
+
+<script src="profile.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Scheme Details | SchemeSaathi</title>
+
+
+    <!-- Main CSS -->
+    <link rel="stylesheet"
+          href="style.css">
+
+
+    <!-- Google Fonts -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+
+        <!-- LOGO -->
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-handshake"></i>
+
+            </div>
+
+            <span>
+                Scheme<span class="logo-highlight">Saathi</span>
+            </span>
+
+        </a>
+
+
+        <!-- BACK BUTTON -->
+
+        <a href="results.html"
+           class="nav-button">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Results
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN PAGE
+===================================================== -->
+
+<main class="scheme-details-page">
+
+    <div class="container scheme-details-container">
+
+
+        <!-- =================================================
+             SCHEME HERO
+        ================================================= -->
+
+        <section class="scheme-details-header">
+
+
+            <!-- ICON -->
+
+            <div class="scheme-details-icon">
+
+                <i id="schemeIcon"
+                   class="fa-solid fa-building-columns">
+                </i>
+
+            </div>
+
+
+            <!-- TITLE + DESCRIPTION -->
+
+            <div class="scheme-details-heading">
+
+                <span id="schemeCategory"
+                      class="section-label">
+
+                    GOVERNMENT SCHEME
+
+                </span>
+
+
+                <h1 id="schemeName">
+
+                    Scheme Name
+
+                </h1>
+
+
+                <p id="schemeDescription">
+
+                    Scheme description
+
+                </p>
+
+            </div>
+
+
+            <!-- ELIGIBILITY BADGE -->
+
+            <div id="eligibilityBadge"
+                 class="details-eligible-badge">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Eligible
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PERSONALIZED MATCH
+        ================================================= -->
+
+        <section class="details-match-card">
+
+
+            <div class="details-match-top">
+
+
+                <div>
+
+                    <span class="section-label">
+
+                        PERSONALIZED MATCH
+
+                    </span>
+
+
+                    <h2>
+
+                        Why this scheme matches you
+
+                    </h2>
+
+                    <p class="details-match-description">
+
+                        SchemeSaathi compares your profile
+                        with the scheme's requirements and
+                        identifies how closely they align.
+
+                    </p>
+
+                </div>
+
+
+                <!-- SCORE -->
+
+                <strong id="matchPercentage">
+
+                    0%
+
+                </strong>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="details-match-track">
+
+                <div id="matchBar"
+                     class="details-match-fill">
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             WHY THIS SCHEME
+        ================================================= -->
+
+        <section class="details-section">
+
+
+            <div class="details-section-header">
+
+
+                <div class="details-section-icon">
+
+                    <i class="fa-solid fa-lightbulb"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        Why did I get this recommendation?
+
+                    </h2>
+
+                    <p>
+
+                        SchemeSaathi explains the factors
+                        behind your recommendation.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="schemeReason"
+                 class="details-content-box">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             BENEFITS
+        ================================================= -->
+
+        <section class="details-section">
+
+
+            <div class="details-section-header">
+
+
+                <div class="details-section-icon">
+
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        Benefits
+
+                    </h2>
+
+                    <p>
+
+                        What this scheme may provide.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="schemeBenefits"
+                 class="benefits-grid">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ELIGIBILITY
+        ================================================= -->
+
+        <section class="details-section">
+
+
+            <div class="details-section-header">
+
+
+                <div class="details-section-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        Eligibility Criteria
+
+                    </h2>
+
+                    <p>
+
+                        Key requirements for this scheme.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="eligibilityList"
+                 class="eligibility-list">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             WHAT AM I MISSING?
+        ================================================= -->
+
+        <section class="details-section gap-section">
+
+
+            <div class="details-section-header">
+
+
+                <div class="details-section-icon gap-icon">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        What am I missing?
+
+                    </h2>
+
+                    <p>
+
+                        Check whether anything is still
+                        required before applying.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="missingRequirements"
+                 class="missing-list">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             DOCUMENT CHECKLIST
+        ================================================= -->
+
+        <section class="details-section">
+
+
+            <div class="details-section-header">
+
+
+                <div class="details-section-icon">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+
+                        Document Checklist
+
+                    </h2>
+
+                    <p>
+
+                        Track the documents you may need
+                        during the application process.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CHECKLIST PROGRESS -->
+
+            <div class="checklist-progress">
+
+
+                <div class="checklist-progress-top">
+
+                    <span>
+
+                        Application readiness
+
+                    </span>
+
+
+                    <strong id="checklistCount">
+
+                        0 / 0 completed
+
+                    </strong>
+
+                </div>
+
+
+                <div class="checklist-progress-track">
+
+                    <div id="checklistProgressBar"
+                         class="checklist-progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DOCUMENTS -->
+
+            <div id="documentList"
+                 class="document-list">
+
+            </div>
+
+
+
+            <!-- CHECKLIST FOOTER -->
+
+            <div class="checklist-footer">
+
+
+                <div class="checklist-status">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <span id="checklistMessage">
+
+                        Complete your document checklist
+                        before applying.
+
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="resetChecklist"
+                    class="checklist-reset">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                    Reset Checklist
+
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             OFFICIAL APPLICATION
+        ================================================= -->
+
+        <section class="apply-section">
+
+
+            <div class="apply-content">
+
+
+                <span class="section-label">
+
+                    OFFICIAL APPLICATION
+
+                </span>
+
+
+                <h2>
+
+                    Ready to apply?
+
+                </h2>
+
+
+                <p>
+
+                    Always verify the latest eligibility
+                    requirements, documents and application
+                    instructions on the official government
+                    portal before applying.
+
+                </p>
+
+            </div>
+
+
+            <a id="officialLink"
+               href="#"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="apply-button">
+
+                Visit Official Portal
+
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+            </a>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             BACK TO RESULTS
+        ================================================= -->
+
+        <div class="details-back">
+
+
+            <a href="results.html"
+               class="secondary-button">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back to All Schemes
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- FOOTER BRAND -->
+
+        <div class="footer-brand">
+
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+
+                    <i class="fa-solid fa-handshake"></i>
+
+                </div>
+
+                <span>
+
+                    Scheme<span class="logo-highlight">
+                        Saathi
+                    </span>
+
+                </span>
+
+            </a>
+
+
+            <p>
+
+                AI-driven scheme matching for
+                marginalized entrepreneurs.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+            <span>
+
+                © 2026 SchemeSaathi
+
+            </span>
+
+
+            <span>
+
+                Frontend Prototype
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="scheme-details.js"></script>
+
+
+</body>
+
+</html>

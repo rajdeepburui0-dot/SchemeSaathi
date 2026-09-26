@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Finding Your Schemes | SchemeSaathi</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-handshake"></i>
+
+            </div>
+
+            <span>
+                Scheme<span class="logo-highlight">
+                    Saathi
+                </span>
+            </span>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MATCHING PAGE
+========================================= -->
+
+<main class="matching-page">
+
+    <div class="container matching-container">
+
+
+        <!-- HEADER -->
+
+        <div class="matching-heading">
+
+            <span class="section-label">
+                SCHEME MATCHING
+            </span>
+
+            <h1>
+                Finding schemes for you<span>.</span>
+            </h1>
+
+            <p id="matchingMessage">
+                We're checking your profile against
+                available government schemes.
+            </p>
+
+        </div>
+
+
+
+        <!-- PROFILE SUMMARY -->
+
+        <div class="matching-profile-card">
+
+            <div class="matching-profile-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="matching-profile-info">
+
+                <span>
+                    PROFILE BEING ANALYZED
+                </span>
+
+                <strong id="profileName">
+                    Your Profile
+                </strong>
+
+                <p id="profileSummary">
+                    Checking your details...
+                </p>
+
+            </div>
+
+            <div class="profile-check">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ANALYSIS CARD -->
+
+        <div class="analysis-card">
+
+
+            <!-- PROGRESS -->
+
+            <div class="analysis-progress-header">
+
+                <span>
+                    Analyzing eligibility
+                </span>
+
+                <strong id="analysisPercentage">
+                    0%
+                </strong>
+
+            </div>
+
+
+            <div class="matching-progress">
+
+                <div
+                    class="matching-progress-bar"
+                    id="analysisProgress">
+                </div>
+
+            </div>
+
+
+
+            <!-- ANALYSIS STEPS -->
+
+            <div class="analysis-list">
+
+
+                <!-- STEP 1 -->
+
+                <div
+                    class="analysis-item"
+                    id="analysis1"
+                >
+
+                    <div class="analysis-item-icon">
+
+                        <i class="fa-solid fa-user-check"></i>
+
+                    </div>
+
+                    <div class="analysis-item-content">
+
+                        <strong>
+                            Checking your profile
+                        </strong>
+
+                        <span>
+                            Reviewing personal and business details
+                        </span>
+
+                    </div>
+
+                    <div class="analysis-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 2 -->
+
+                <div
+                    class="analysis-item"
+                    id="analysis2"
+                >
+
+                    <div class="analysis-item-icon">
+
+                        <i class="fa-solid fa-filter"></i>
+
+                    </div>
+
+                    <div class="analysis-item-content">
+
+                        <strong>
+                            Checking eligibility
+                        </strong>
+
+                        <span>
+                            Applying scheme eligibility criteria
+                        </span>
+
+                    </div>
+
+                    <div class="analysis-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 3 -->
+
+                <div
+                    class="analysis-item"
+                    id="analysis3"
+                >
+
+                    <div class="analysis-item-icon">
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                    </div>
+
+                    <div class="analysis-item-content">
+
+                        <strong>
+                            Matching your needs
+                        </strong>
+
+                        <span>
+                            Comparing schemes with your business requirements
+                        </span>
+
+                    </div>
+
+                    <div class="analysis-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- STEP 4 -->
+
+                <div
+                    class="analysis-item"
+                    id="analysis4"
+                >
+
+                    <div class="analysis-item-icon">
+
+                        <i class="fa-solid fa-ranking-star"></i>
+
+                    </div>
+
+                    <div class="analysis-item-content">
+
+                        <strong>
+                            Ranking recommendations
+                        </strong>
+
+                        <span>
+                            Preparing your personalized scheme results
+                        </span>
+
+                    </div>
+
+                    <div class="analysis-status">
+
+                        <i class="fa-solid fa-circle"></i>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PRIVACY NOTE -->
+
+        <div class="matching-note">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <span>
+                Your profile information is used only
+                for this scheme matching process.
+            </span>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+        <div class="footer-brand">
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+
+                    <i class="fa-solid fa-handshake"></i>
+
+                </div>
+
+                <span>
+                    Scheme<span class="logo-highlight">
+                        Saathi
+                    </span>
+                </span>
+
+            </a>
+
+            <p>
+                AI-driven scheme matching for
+                marginalized entrepreneurs.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 SchemeSaathi
+            </span>
+
+            <span>
+                Frontend Prototype
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="scheme-data.js"></script>
+<script src="matching.js"></script>
+
+</body>
+
+</html>

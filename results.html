@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Your Schemes | SchemeSaathi</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+        <a href="index.html"
+           class="logo">
+
+            <div class="logo-icon">
+
+                <i class="fa-solid fa-handshake"></i>
+
+            </div>
+
+            <span>
+                Scheme<span class="logo-highlight">
+                    Saathi
+                </span>
+            </span>
+
+        </a>
+
+
+        <a href="profile.html"
+           class="nav-button">
+
+            <i class="fa-solid fa-user-pen"></i>
+
+            Edit Profile
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     RESULTS PAGE
+========================================= -->
+
+<main class="results-page">
+
+    <div class="container results-container">
+
+
+        <!-- =================================
+             PAGE HEADER
+        ================================== -->
+
+        <section class="results-page-header">
+
+            <span class="section-label">
+                PERSONALIZED RESULTS
+            </span>
+
+            <h1>
+                Schemes matched for you.
+            </h1>
+
+            <p>
+                Based on your profile, business needs
+                and eligibility criteria, these schemes
+                may be relevant to you.
+            </p>
+
+        </section>
+
+
+
+        <!-- =================================
+             PROFILE SUMMARY
+        ================================== -->
+
+        <section class="results-profile">
+
+            <div class="results-profile-icon">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+
+            <div class="results-profile-info">
+
+                <strong id="userName">
+                    User
+                </strong>
+
+                <span id="userSummary">
+                    Your profile
+                </span>
+
+            </div>
+
+
+            <a href="profile.html"
+               class="secondary-button">
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Profile
+
+            </a>
+
+        </section>
+
+
+
+        <!-- =================================
+             RESULTS TOP
+        ================================== -->
+
+        <div class="results-top">
+
+            <div>
+
+                <span class="section-label">
+                    ELIGIBLE SCHEMES
+                </span>
+
+                <h2>
+                    Recommended for you
+                </h2>
+
+            </div>
+
+
+            <div class="result-number">
+
+                <strong id="schemeCount">
+                    0
+                </strong>
+
+                <span>
+                    schemes found
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             COMPARE BUTTON
+        ================================== -->
+
+        <div class="results-compare">
+
+            <a href="compare.html"
+               class="secondary-button">
+
+                <i class="fa-solid fa-scale-balanced"></i>
+
+                Compare Schemes
+
+            </a>
+
+        </div>
+
+
+
+        <!-- =================================
+             SCHEMES
+        ================================== -->
+
+        <section id="resultsList"
+                 class="results-list">
+
+        </section>
+
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================== -->
+
+        <section id="emptyState"
+                 class="empty-state"
+                 style="display:none;">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </div>
+
+
+            <h3>
+                No matching schemes found
+            </h3>
+
+
+            <p>
+                Try updating your profile information
+                or business requirements.
+            </p>
+
+
+            <a href="profile.html"
+               class="primary-button">
+
+                Update Profile
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </a>
+
+        </section>
+
+
+
+        <!-- =================================
+             INFO
+        ================================== -->
+
+        <section class="results-info">
+
+            <div class="results-info-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Why these schemes?
+                </strong>
+
+
+                <p>
+                    SchemeSaathi first checks eligibility
+                    requirements and then considers your
+                    business needs to identify relevant
+                    schemes.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+        <div class="footer-brand">
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+
+                    <i class="fa-solid fa-handshake"></i>
+
+                </div>
+
+                <span>
+                    Scheme<span class="logo-highlight">
+                        Saathi
+                    </span>
+                </span>
+
+            </a>
+
+
+            <p>
+                AI-driven scheme matching for
+                marginalized entrepreneurs.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 SchemeSaathi
+            </span>
+
+
+            <span>
+                Frontend Prototype
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="scheme-data.js"></script>
+<script src="results.js"></script>
+
+</body>
+
+</html>
