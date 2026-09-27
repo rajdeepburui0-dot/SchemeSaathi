@@ -1,13 +1,33 @@
-
 /* =========================================
    SCHEMESAATHI
    MATCHING PAGE
 
-   Uses:
-   - scheme-data.js
-   - profile.js
-   - results.js
-   - scheme-details.js
+   Backend flow:
+
+   profile.html
+        ↓
+   profile.js
+        ↓
+   POST /api/match
+        ↓
+   server.js
+        ↓
+   Backend returns ALL eligible schemes
+        ↓
+   Backend sorts by match priority
+        ↓
+   profile.js saves response
+        ↓
+   matching.js reads backend results
+        ↓
+   results.html
+
+   IMPORTANT:
+   - Backend performs eligibility checking
+   - Backend calculates match score
+   - Backend sorts schemes by priority
+   - ALL eligible schemes are returned
+   - No TOP 5 limitation here
 ========================================= */
 
 
@@ -16,12 +36,15 @@
 ========================================= */
 
 const savedProfile =
-    localStorage.getItem("schemeSaathiProfile");
+    localStorage.getItem(
+        "schemeSaathiProfile"
+    );
 
 
 if (!savedProfile) {
 
-    window.location.href = "profile.html";
+    window.location.href =
+        "profile.html";
 
 }
 
@@ -34,39 +57,105 @@ let profile = null;
 
 try {
 
-    profile = JSON.parse(savedProfile);
+    profile =
+        JSON.parse(savedProfile);
 
 } catch (error) {
 
-    console.error("Invalid profile:", error);
+    console.error(
+        "Invalid saved profile:",
+        error
+    );
 
-    localStorage.removeItem("schemeSaathiProfile");
+    localStorage.removeItem(
+        "schemeSaathiProfile"
+    );
 
-    window.location.href = "profile.html";
+    window.location.href =
+        "profile.html";
 
 }
-
 
 
 /* =========================================
-   CHECK DATABASE
+   GET BACKEND RESULTS
 ========================================= */
 
-if (
-    typeof schemeDatabase === "undefined" ||
-    !Array.isArray(schemeDatabase)
-) {
+const savedResults =
+    localStorage.getItem(
+        "schemeSaathiResults"
+    );
+
+
+if (!savedResults) {
 
     console.error(
-        "ERROR: schemeDatabase is not loaded."
+        "No backend matching results found."
     );
 
     alert(
-        "Scheme database could not be loaded. Please check that scheme-data.js is loaded before matching.js."
+        "Matching results were not found. Please submit your profile again."
     );
+
+    window.location.href =
+        "profile.html";
 
 }
 
+
+/* =========================================
+   READ BACKEND RESULTS
+========================================= */
+
+let backendResults = null;
+
+try {
+
+    backendResults =
+        JSON.parse(savedResults);
+
+} catch (error) {
+
+    console.error(
+        "Invalid backend results:",
+        error
+    );
+
+    localStorage.removeItem(
+        "schemeSaathiResults"
+    );
+
+    window.location.href =
+        "profile.html";
+
+}
+
+
+/* =========================================
+   VERIFY BACKEND RESPONSE
+========================================= */
+
+if (
+    !backendResults ||
+    backendResults.success !== true ||
+    !Array.isArray(
+        backendResults.schemes
+    )
+) {
+
+    console.error(
+        "Invalid backend matching response:",
+        backendResults
+    );
+
+    alert(
+        "Unable to load scheme recommendations. Please submit your profile again."
+    );
+
+    window.location.href =
+        "profile.html";
+
+}
 
 
 /* =========================================
@@ -74,30 +163,48 @@ if (
 ========================================= */
 
 const profileName =
-    document.getElementById("profileName");
+    document.getElementById(
+        "profileName"
+    );
+
 
 const profileSummary =
-    document.getElementById("profileSummary");
+    document.getElementById(
+        "profileSummary"
+    );
+
 
 const progress =
-    document.getElementById("analysisProgress");
+    document.getElementById(
+        "analysisProgress"
+    );
+
 
 const percentage =
-    document.getElementById("analysisPercentage");
+    document.getElementById(
+        "analysisPercentage"
+    );
 
 
 const steps = [
 
-    document.getElementById("analysis1"),
+    document.getElementById(
+        "analysis1"
+    ),
 
-    document.getElementById("analysis2"),
+    document.getElementById(
+        "analysis2"
+    ),
 
-    document.getElementById("analysis3"),
+    document.getElementById(
+        "analysis3"
+    ),
 
-    document.getElementById("analysis4")
+    document.getElementById(
+        "analysis4"
+    )
 
 ];
-
 
 
 /* =========================================
@@ -109,17 +216,20 @@ if (profile) {
     if (profileName) {
 
         profileName.textContent =
-            profile.name || "Your Profile";
+            profile.name ||
+            "Your Profile";
 
     }
 
 
     const business =
-        profile.businessType || "Business";
+        profile.businessType ||
+        "Business";
 
 
     const state =
-        profile.state || "Your State";
+        profile.state ||
+        "Your State";
 
 
     if (profileSummary) {
@@ -130,32 +240,6 @@ if (profile) {
     }
 
 }
-
-
-
-/* =========================================
-   NORMALIZE
-========================================= */
-
-function normalize(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
-
-    }
-
-
-    return String(value)
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, "-");
-
-}
-
 
 
 /* =========================================
@@ -181,7 +265,6 @@ function updateProgress(value) {
 }
 
 
-
 /* =========================================
    COMPLETE STEP
 ========================================= */
@@ -195,13 +278,20 @@ function completeStep(step) {
     }
 
 
-    step.classList.remove("active");
+    step.classList.remove(
+        "active"
+    );
 
-    step.classList.add("completed");
+
+    step.classList.add(
+        "completed"
+    );
 
 
     const status =
-        step.querySelector(".analysis-status");
+        step.querySelector(
+            ".analysis-status"
+        );
 
 
     if (status) {
@@ -212,7 +302,6 @@ function completeStep(step) {
     }
 
 }
-
 
 
 /* =========================================
@@ -228,11 +317,15 @@ function activateStep(step) {
     }
 
 
-    step.classList.add("active");
+    step.classList.add(
+        "active"
+    );
 
 
     const status =
-        step.querySelector(".analysis-status");
+        step.querySelector(
+            ".analysis-status"
+        );
 
 
     if (status) {
@@ -245,482 +338,172 @@ function activateStep(step) {
 }
 
 
-
 /* =========================================
-   HARD ELIGIBILITY
+   VERIFY BACKEND RESULTS
 ========================================= */
 
-function isHardEligible(scheme) {
-
-
-    /* -------------------------------------
-       AGE
-    ------------------------------------- */
-
-    if (
-        scheme.minAge !== null &&
-        scheme.minAge !== undefined
-    ) {
-
-        if (
-            Number(profile.age) <
-            Number(scheme.minAge)
-        ) {
-
-            return false;
-
-        }
-
-    }
-
-
-
-    /* -------------------------------------
-       STATE
-    ------------------------------------- */
-
-    if (
-        Array.isArray(scheme.states) &&
-        scheme.states.length > 0
-    ) {
-
-        const userState =
-            normalize(profile.state);
-
-
-        const allowedStates =
-            scheme.states.map(
-                function (state) {
-
-                    return normalize(state);
-
-                }
-            );
-
-
-        if (
-            !allowedStates.includes("all") &&
-            !allowedStates.includes(userState)
-        ) {
-
-            return false;
-
-        }
-
-    }
-
-
-
-    return true;
-
-}
-
-
-
-/* =========================================
-   CALCULATE MATCH SCORE
-========================================= */
-
-function calculateMatch(scheme) {
-
-    let score = 0;
-
-    let totalWeight = 0;
-
-
-
-    /* =====================================
-       BUSINESS TYPE
-       30 POINTS
-    ===================================== */
-
-    totalWeight += 30;
-
-
-    const userBusinessType =
-        normalize(profile.businessType);
-
-
-    if (
-        userBusinessType &&
-        Array.isArray(scheme.businessTypes)
-    ) {
-
-        const businessTypes =
-            scheme.businessTypes.map(normalize);
-
-
-        if (
-            businessTypes.includes(
-                userBusinessType
-            )
-        ) {
-
-            score += 30;
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       BUSINESS STAGE
-       20 POINTS
-    ===================================== */
-
-    totalWeight += 20;
-
-
-    const userStage =
-        normalize(profile.businessStage);
-
-
-    if (
-        userStage &&
-        Array.isArray(scheme.businessStages)
-    ) {
-
-        const stages =
-            scheme.businessStages.map(normalize);
-
-
-        if (
-            stages.includes(userStage)
-        ) {
-
-            score += 20;
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       SUPPORT
-       25 POINTS
-    ===================================== */
-
-    totalWeight += 25;
-
-
-    const userSupport =
-        Array.isArray(profile.support)
-            ? profile.support
-            : [];
-
-
-    if (
-        userSupport.length > 0 &&
-        Array.isArray(scheme.support)
-    ) {
-
-        const schemeSupport =
-            scheme.support.map(normalize);
-
-
-        const matchedSupport =
-            userSupport.filter(
-                function (support) {
-
-                    return schemeSupport.includes(
-                        normalize(support)
-                    );
-
-                }
-            );
-
-
-        if (
-            matchedSupport.length > 0
-        ) {
-
-            score += 25;
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       SOCIAL CATEGORY
-       15 POINTS
-    ===================================== */
-
-    totalWeight += 15;
-
-
-    const userCategory =
-        normalize(profile.category);
-
-
-    if (
-        userCategory &&
-        Array.isArray(scheme.categories)
-    ) {
-
-        const categories =
-            scheme.categories.map(normalize);
-
-
-        if (
-            categories.includes(
-                userCategory
-            )
-        ) {
-
-            score += 15;
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       STATE
-       10 POINTS
-    ===================================== */
-
-    totalWeight += 10;
-
-
-    if (
-        Array.isArray(scheme.states)
-    ) {
-
-        const userState =
-            normalize(profile.state);
-
-
-        const states =
-            scheme.states.map(normalize);
-
-
-        if (
-            states.includes("all") ||
-            states.includes(userState)
-        ) {
-
-            score += 10;
-
-        }
-
-    }
-
-
-
-    /* =====================================
-       FINAL SCORE
-    ===================================== */
-
-    let finalScore =
-        Math.round(
-            (score / totalWeight) * 100
-        );
-
-
-    /*
-       Give every eligible scheme
-       a visible score.
-
-       This does NOT mean the user is
-       officially eligible.
-
-       It is only a profile relevance
-       score for this prototype.
-    */
-
-    if (finalScore < 35) {
-
-        finalScore = 35;
-
-    }
-
-
-    if (finalScore > 98) {
-
-        finalScore = 98;
-
-    }
-
-
-    return finalScore;
-
-}
-
-
-
-/* =========================================
-   GENERATE RECOMMENDATIONS
-========================================= */
-
-function generateRecommendations() {
-
-    if (
-        typeof schemeDatabase === "undefined" ||
-        !Array.isArray(schemeDatabase)
-    ) {
-
-        console.error(
-            "schemeDatabase is unavailable."
-        );
-
-        return [];
-
-    }
-
-
-    const recommendations = [];
-
-
-    schemeDatabase.forEach(
-        function (scheme) {
-
-            /*
-               Only clear hard restrictions
-               remove a scheme.
-
-               Business type, stage,
-               category and support are
-               used for ranking.
-            */
-
-            if (
-                !isHardEligible(scheme)
-            ) {
-
-                return;
-
-            }
-
-
-            const match =
-                calculateMatch(scheme);
-
-
-            recommendations.push({
-
-                ...scheme,
-
-                match: match
-
-            });
-
-        }
-    );
-
-
-
-    /* =====================================
-       SORT HIGHEST MATCH FIRST
-    ===================================== */
-
-    recommendations.sort(
-        function (a, b) {
-
-            return b.match - a.match;
-
-        }
-    );
-
-
-    return recommendations;
-
-}
-
-
-
-/* =========================================
-   SAVE RESULTS
-========================================= */
-
-function saveResults() {
-
-    const recommendations =
-        generateRecommendations();
-
-
-    /*
-       IMPORTANT DEBUG INFORMATION
-    */
+function verifyBackendResults() {
 
     console.log(
         "================================="
     );
 
-    console.log(
-        "SCHEMESAATHI MATCHING"
-    );
 
     console.log(
-        "Database:",
-        schemeDatabase
+        "SCHEMESAATHI BACKEND RESULTS"
     );
 
-    console.log(
-        "Total database schemes:",
-        schemeDatabase.length
-    );
 
     console.log(
         "Profile:",
         profile
     );
 
-    console.log(
-        "Generated recommendations:",
-        recommendations.length
-    );
 
     console.log(
-        "Recommendations:",
-        recommendations
+        "Backend response:",
+        backendResults
     );
+
+
+    console.log(
+        "Backend success:",
+        backendResults.success
+    );
+
+
+    console.log(
+        "Backend count:",
+        backendResults.count
+    );
+
+
+    console.log(
+        "ALL SCHEMES RECEIVED:",
+        backendResults.schemes.length
+    );
+
+
+    console.log(
+        "SCHEMES:",
+        backendResults.schemes
+    );
+
 
     console.log(
         "================================="
     );
 
+}
 
 
-    /* =====================================
-       SAVE TO LOCAL STORAGE
-    ===================================== */
+/* =========================================
+   VALIDATE AND SORT BACKEND RESULTS
+========================================= */
 
-    localStorage.setItem(
+function prepareResults() {
 
-        "schemeSaathiResults",
-
-        JSON.stringify(
-            recommendations
+    if (
+        !backendResults ||
+        !Array.isArray(
+            backendResults.schemes
         )
+    ) {
 
+        return;
+
+    }
+
+
+    /*
+       Make a copy so we don't directly
+       modify the backend response.
+    */
+
+    const schemes =
+        [...backendResults.schemes];
+
+
+    /*
+       Sort by match score.
+
+       Highest match first.
+    */
+
+    schemes.sort(
+        function (a, b) {
+
+            return (
+                Number(b.match || 0) -
+                Number(a.match || 0)
+            );
+
+        }
     );
 
 
     /*
-       Extra verification
+       Update priority.
+
+       1 = highest match
+       2 = second
+       3 = third
+       etc.
     */
 
-    const saved =
-        localStorage.getItem(
-            "schemeSaathiResults"
-        );
+    schemes.forEach(
+        function (scheme, index) {
 
+            scheme.priority =
+                index + 1;
 
-    console.log(
-        "Saved results:",
-        JSON.parse(saved)
+        }
     );
 
 
-    return recommendations;
+    /*
+       IMPORTANT:
+
+       Save ALL schemes.
+
+       There is NO slice(0, 5).
+    */
+
+    backendResults.schemes =
+        schemes;
+
+
+    /*
+       Update count.
+
+       This allows results.html
+       to know how many schemes
+       were actually returned.
+    */
+
+    backendResults.count =
+        schemes.length;
+
+
+    /*
+       Save complete results
+       back to localStorage.
+    */
+
+    localStorage.setItem(
+        "schemeSaathiResults",
+        JSON.stringify(
+            backendResults
+        )
+    );
+
+
+    console.log(
+        "Prepared ALL schemes:",
+        schemes.length
+    );
 
 }
-
 
 
 /* =========================================
@@ -730,23 +513,18 @@ function saveResults() {
 function startMatching() {
 
 
-    /*
-       ======================================
-       IMPORTANT
-       ======================================
+    /* =====================================
+       VERIFY BACKEND DATA
+    ===================================== */
 
-       Generate and save the schemes
-       IMMEDIATELY.
+    verifyBackendResults();
 
-       We do NOT wait 2.7 seconds.
 
-       This guarantees that results.html
-       has the data even if the user
-       refreshes or the animation changes.
-    */
+    /* =====================================
+       PREPARE ALL RESULTS
+    ===================================== */
 
-    saveResults();
-
+    prepareResults();
 
 
     /* =====================================
@@ -766,7 +544,9 @@ function startMatching() {
             );
 
 
-            updateProgress(25);
+            updateProgress(
+                25
+            );
 
 
             activateStep(
@@ -776,7 +556,6 @@ function startMatching() {
         },
         900
     );
-
 
 
     /* =====================================
@@ -791,7 +570,9 @@ function startMatching() {
             );
 
 
-            updateProgress(50);
+            updateProgress(
+                50
+            );
 
 
             activateStep(
@@ -801,7 +582,6 @@ function startMatching() {
         },
         1800
     );
-
 
 
     /* =====================================
@@ -816,7 +596,9 @@ function startMatching() {
             );
 
 
-            updateProgress(75);
+            updateProgress(
+                75
+            );
 
 
             activateStep(
@@ -826,7 +608,6 @@ function startMatching() {
         },
         2700
     );
-
 
 
     /* =====================================
@@ -841,12 +622,13 @@ function startMatching() {
             );
 
 
-            updateProgress(100);
+            updateProgress(
+                100
+            );
 
         },
         3600
     );
-
 
 
     /* =====================================
@@ -866,7 +648,6 @@ function startMatching() {
 }
 
 
-
 /* =========================================
    START
 ========================================= */
@@ -876,6 +657,13 @@ document.addEventListener(
     function () {
 
         if (!profile) {
+
+            return;
+
+        }
+
+
+        if (!backendResults) {
 
             return;
 

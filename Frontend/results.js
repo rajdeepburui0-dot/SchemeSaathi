@@ -1,20 +1,15 @@
 
 /* =========================================================
    SCHEMESAATHI
-   PREMIUM RESULTS PAGE
-   =========================================================
+   RESULTS PAGE
 
-   Required script order in results.html:
-
-   <script src="scheme-data.js"></script>
-   <script src="results.js"></script>
-
-   Uses:
-   - scheme-data.js
-   - schemeSaathiProfile from localStorage
-
-   No image system.
-   ========================================================= */
+   IMPORTANT:
+   - Results come from backend response saved by profile.js
+   - ALL returned schemes are displayed
+   - Schemes are sorted by match score
+   - NO top-5 limit
+   - Clicking "View Scheme Details" works with scheme-details.js
+========================================================= */
 
 
 /* =========================================================
@@ -41,68 +36,200 @@ try {
 
 } catch (error) {
 
-    console.error("Invalid profile data:", error);
+    console.error(
+        "Invalid profile data:",
+        error
+    );
 
-    localStorage.removeItem("schemeSaathiProfile");
+    localStorage.removeItem(
+        "schemeSaathiProfile"
+    );
 
-    window.location.href = "profile.html";
+    window.location.href =
+        "profile.html";
 
 }
 
 
 /* =========================================================
-   CHECK DATABASE
+   GET BACKEND RESULTS
 ========================================================= */
 
-if (
-    typeof schemeDatabase === "undefined" ||
-    !Array.isArray(schemeDatabase)
-) {
-
-    console.error(
-        "SchemeSaathi ERROR: schemeDatabase is undefined."
+const savedResults =
+    localStorage.getItem(
+        "schemeSaathiResults"
     );
 
+
+let allResults = [];
+
+
+try {
+
+    allResults =
+        savedResults
+            ? JSON.parse(savedResults)
+            : [];
+
+} catch (error) {
+
     console.error(
-        "Make sure results.html loads scheme-data.js BEFORE results.js."
+        "Invalid results data:",
+        error
     );
+
+    allResults = [];
 
 }
 
 
 /* =========================================================
-   ELEMENTS
+   NORMALIZE BACKEND RESPONSE
+========================================================= */
+
+/*
+   Your backend response may be:
+
+   {
+       success: true,
+       count: 16,
+       schemes: [...]
+   }
+
+   OR directly:
+
+   [...]
+
+   This handles both.
+*/
+
+if (
+    !Array.isArray(allResults) &&
+    allResults &&
+    Array.isArray(allResults.schemes)
+) {
+
+    allResults =
+        allResults.schemes;
+
+}
+
+
+/* =========================================================
+   CHECK RESULTS
+========================================================= */
+
+if (!Array.isArray(allResults)) {
+
+    allResults = [];
+
+}
+
+
+/* =========================================================
+   SORT BY MATCH SCORE
+========================================================= */
+
+/*
+   IMPORTANT:
+
+   We DO NOT remove schemes.
+
+   Every scheme returned by the backend
+   remains visible.
+
+   Highest match comes first.
+*/
+
+allResults.sort(
+    function (a, b) {
+
+        return (
+            Number(b.match || 0) -
+            Number(a.match || 0)
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SAVE NORMALIZED RESULTS
+========================================================= */
+
+localStorage.setItem(
+
+    "schemeSaathiResults",
+
+    JSON.stringify(
+        allResults
+    )
+
+);
+
+
+/* =========================================================
+   PAGE ELEMENTS
 ========================================================= */
 
 const userName =
-    document.getElementById("userName");
+    document.getElementById(
+        "userName"
+    );
+
 
 const userSummary =
-    document.getElementById("userSummary");
+    document.getElementById(
+        "userSummary"
+    );
+
 
 const schemeCount =
-    document.getElementById("schemeCount");
+    document.getElementById(
+        "schemeCount"
+    );
+
 
 const matchedCount =
-    document.getElementById("matchedCount");
+    document.getElementById(
+        "matchedCount"
+    );
+
 
 const supportCount =
-    document.getElementById("supportCount");
+    document.getElementById(
+        "supportCount"
+    );
+
 
 const resultsList =
-    document.getElementById("resultsList");
+    document.getElementById(
+        "resultsList"
+    );
+
 
 const emptyState =
-    document.getElementById("emptyState");
+    document.getElementById(
+        "emptyState"
+    );
+
 
 const searchInput =
-    document.getElementById("schemeSearch");
+    document.getElementById(
+        "schemeSearch"
+    );
+
 
 const categorySelect =
-    document.getElementById("schemeCategory");
+    document.getElementById(
+        "schemeCategory"
+    );
+
 
 const sortSelect =
-    document.getElementById("schemeSort");
+    document.getElementById(
+        "schemeSort"
+    );
 
 
 /* =========================================================
@@ -120,6 +247,7 @@ function normalize(value) {
 
     }
 
+
     return String(value)
         .trim()
         .toLowerCase()
@@ -135,14 +263,17 @@ function normalize(value) {
 function displayProfile() {
 
     if (!profile) {
+
         return;
+
     }
 
 
     if (userName) {
 
         userName.textContent =
-            profile.name || "User";
+            profile.name ||
+            "User";
 
     }
 
@@ -150,10 +281,14 @@ function displayProfile() {
     if (userSummary) {
 
         const business =
-            profile.businessType || "Business";
+            profile.businessType ||
+            "Business";
+
 
         const state =
-            profile.state || "Your State";
+            profile.state ||
+            "Your State";
+
 
         userSummary.textContent =
             `${business} • ${state}`;
@@ -164,243 +299,23 @@ function displayProfile() {
 
 
 /* =========================================================
-   HARD ELIGIBILITY
-========================================================= */
-
-function isHardEligible(scheme) {
-
-
-    /* -----------------------------------------------------
-       AGE
-    ----------------------------------------------------- */
-
-    if (
-        scheme.minAge !== null &&
-        scheme.minAge !== undefined &&
-        profile.age
-    ) {
-
-        if (
-            Number(profile.age) <
-            Number(scheme.minAge)
-        ) {
-
-            return false;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       STATE
-    ----------------------------------------------------- */
-
-    if (
-        Array.isArray(scheme.states) &&
-        scheme.states.length > 0
-    ) {
-
-        const userState =
-            normalize(profile.state);
-
-        const allowedStates =
-            scheme.states.map(normalize);
-
-        if (
-            !allowedStates.includes("all") &&
-            !allowedStates.includes(userState)
-        ) {
-
-            return false;
-
-        }
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =========================================================
-   CALCULATE MATCH SCORE
-========================================================= */
-
-function calculateMatch(scheme) {
-
-    let score = 0;
-
-
-    /* -----------------------------------------------------
-       BUSINESS TYPE — 30
-    ----------------------------------------------------- */
-
-    const businessType =
-        normalize(profile.businessType);
-
-    if (
-        businessType &&
-        Array.isArray(scheme.businessTypes)
-    ) {
-
-        if (
-            scheme.businessTypes
-                .map(normalize)
-                .includes(businessType)
-        ) {
-
-            score += 30;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       BUSINESS STAGE — 20
-    ----------------------------------------------------- */
-
-    const businessStage =
-        normalize(profile.businessStage);
-
-    if (
-        businessStage &&
-        Array.isArray(scheme.businessStages)
-    ) {
-
-        if (
-            scheme.businessStages
-                .map(normalize)
-                .includes(businessStage)
-        ) {
-
-            score += 20;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       SUPPORT NEED — 30
-    ----------------------------------------------------- */
-
-    if (
-        Array.isArray(profile.support) &&
-        Array.isArray(scheme.support)
-    ) {
-
-        const userSupport =
-            profile.support.map(normalize);
-
-        const schemeSupport =
-            scheme.support.map(normalize);
-
-        const matches =
-            userSupport.filter(
-                need =>
-                    schemeSupport.includes(need)
-            );
-
-        if (matches.length > 0) {
-
-            score += 25;
-
-        }
-
-        if (matches.length >= 2) {
-
-            score += 5;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       SOCIAL CATEGORY — 15
-    ----------------------------------------------------- */
-
-    const category =
-        normalize(profile.category);
-
-    if (
-        category &&
-        Array.isArray(scheme.categories)
-    ) {
-
-        if (
-            scheme.categories
-                .map(normalize)
-                .includes(category)
-        ) {
-
-            score += 15;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       STATE — 10
-    ----------------------------------------------------- */
-
-    const state =
-        normalize(profile.state);
-
-    if (
-        Array.isArray(scheme.states)
-    ) {
-
-        const states =
-            scheme.states.map(normalize);
-
-        if (
-            states.includes("all") ||
-            states.includes(state)
-        ) {
-
-            score += 10;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       CONVERT TO 100
-    ----------------------------------------------------- */
-
-    let match =
-        Math.round(
-            (score / 105) * 100
-        );
-
-
-    if (match > 98) {
-        match = 98;
-    }
-
-
-    return match;
-
-}
-
-
-/* =========================================================
-   GET MATCH LABEL
+   MATCH LABEL
 ========================================================= */
 
 function getMatchLabel(match) {
 
+    match =
+        Number(match || 0);
+
+
     if (match >= 70) {
 
         return {
+
             text: "Strong Match",
+
             className: "strong"
+
         };
 
     }
@@ -409,8 +324,11 @@ function getMatchLabel(match) {
     if (match >= 45) {
 
         return {
+
             text: "Potential Match",
+
             className: "potential"
+
         };
 
     }
@@ -419,16 +337,22 @@ function getMatchLabel(match) {
     if (match > 0) {
 
         return {
+
             text: "Explore",
+
             className: "explore"
+
         };
 
     }
 
 
     return {
+
         text: "Check Eligibility",
+
         className: "check"
+
     };
 
 }
@@ -444,72 +368,128 @@ function getMatchReasons(scheme) {
 
 
     const businessType =
-        normalize(profile.businessType);
+        normalize(
+            profile?.businessType
+        );
+
 
     const stage =
-        normalize(profile.businessStage);
+        normalize(
+            profile?.businessStage
+        );
+
 
     const category =
-        normalize(profile.category);
+        normalize(
+            profile?.category
+        );
+
 
     const state =
-        normalize(profile.state);
+        normalize(
+            profile?.state
+        );
 
+
+    /* -----------------------------------------------------
+       BUSINESS TYPE
+    ----------------------------------------------------- */
 
     if (
         businessType &&
-        Array.isArray(scheme.businessTypes) &&
+        Array.isArray(
+            scheme.businessTypes
+        ) &&
         scheme.businessTypes
             .map(normalize)
-            .includes(businessType)
+            .includes(
+                businessType
+            )
     ) {
 
         reasons.push({
+
             icon: "fa-store",
-            text: "Matches your business type"
+
+            text:
+                "Matches your business type"
+
         });
 
     }
 
+
+    /* -----------------------------------------------------
+       BUSINESS STAGE
+    ----------------------------------------------------- */
 
     if (
         stage &&
-        Array.isArray(scheme.businessStages) &&
+        Array.isArray(
+            scheme.businessStages
+        ) &&
         scheme.businessStages
             .map(normalize)
-            .includes(stage)
+            .includes(
+                stage
+            )
     ) {
 
         reasons.push({
+
             icon: "fa-chart-line",
-            text: "Suitable for your business stage"
+
+            text:
+                "Suitable for your business stage"
+
         });
 
     }
 
+
+    /* -----------------------------------------------------
+       CATEGORY
+    ----------------------------------------------------- */
 
     if (
         category &&
-        Array.isArray(scheme.categories) &&
+        Array.isArray(
+            scheme.categories
+        ) &&
         scheme.categories
             .map(normalize)
-            .includes(category)
+            .includes(
+                category
+            )
     ) {
 
         reasons.push({
+
             icon: "fa-user-check",
-            text: "Matches your category"
+
+            text:
+                "Matches your category"
+
         });
 
     }
 
 
+    /* -----------------------------------------------------
+       STATE
+    ----------------------------------------------------- */
+
     if (
-        Array.isArray(scheme.states)
+        Array.isArray(
+            scheme.states
+        )
     ) {
 
         const states =
-            scheme.states.map(normalize);
+            scheme.states.map(
+                normalize
+            );
+
 
         if (
             states.includes("all") ||
@@ -517,8 +497,13 @@ function getMatchReasons(scheme) {
         ) {
 
             reasons.push({
-                icon: "fa-location-dot",
-                text: "Available in your location"
+
+                icon:
+                    "fa-location-dot",
+
+                text:
+                    "Available in your location"
+
             });
 
         }
@@ -526,149 +511,63 @@ function getMatchReasons(scheme) {
     }
 
 
+    /* -----------------------------------------------------
+       SUPPORT
+    ----------------------------------------------------- */
+
     if (
-        Array.isArray(profile.support) &&
-        Array.isArray(scheme.support)
+        Array.isArray(
+            profile?.support
+        ) &&
+        Array.isArray(
+            scheme.support
+        )
     ) {
 
         const userSupport =
-            profile.support.map(normalize);
+            profile.support.map(
+                normalize
+            );
+
 
         const schemeSupport =
-            scheme.support.map(normalize);
+            scheme.support.map(
+                normalize
+            );
+
 
         const supportMatch =
             userSupport.some(
-                item =>
-                    schemeSupport.includes(item)
+                function (item) {
+
+                    return schemeSupport.includes(
+                        item
+                    );
+
+                }
             );
+
 
         if (supportMatch) {
 
             reasons.push({
-                icon: "fa-hand-holding-heart",
-                text: "Supports your selected needs"
-            });
 
-        }
+                icon:
+                    "fa-hand-holding-heart",
 
-    }
-
-
-    return reasons.slice(0, 3);
-
-}
-
-
-/* =========================================================
-   GENERATE RESULTS
-========================================================= */
-
-function generateResults() {
-
-    if (
-        typeof schemeDatabase === "undefined" ||
-        !Array.isArray(schemeDatabase)
-    ) {
-
-        return [];
-
-    }
-
-
-    const results = [];
-
-
-    schemeDatabase.forEach(
-        scheme => {
-
-            const eligible =
-                isHardEligible(scheme);
-
-            const match =
-                calculateMatch(scheme);
-
-
-            results.push({
-
-                ...scheme,
-
-                match: eligible ? match : 0,
-
-                hardEligible: eligible
+                text:
+                    "Supports your selected needs"
 
             });
 
         }
-    );
 
-
-    results.sort(
-        (a, b) =>
-            b.match - a.match
-    );
-
-
-    localStorage.setItem(
-        "schemeSaathiResults",
-        JSON.stringify(results)
-    );
-
-
-    return results;
-
-}
-
-
-/* =========================================================
-   POPULATE CATEGORIES
-========================================================= */
-
-function populateCategories(schemes) {
-
-    if (!categorySelect) {
-        return;
     }
 
 
-    const categories =
-        [
-            ...new Set(
-                schemes
-                    .map(
-                        scheme =>
-                            scheme.category
-                    )
-                    .filter(Boolean)
-            )
-        ]
-        .sort();
-
-
-    categorySelect.innerHTML = `
-        <option value="all">
-            All Categories
-        </option>
-    `;
-
-
-    categories.forEach(
-        category => {
-
-            const option =
-                document.createElement("option");
-
-            option.value =
-                category;
-
-            option.textContent =
-                category;
-
-            categorySelect.appendChild(
-                option
-            );
-
-        }
+    return reasons.slice(
+        0,
+        3
     );
 
 }
@@ -681,13 +580,21 @@ function populateCategories(schemes) {
 function formatText(value) {
 
     if (!value) {
+
         return "";
+
     }
+
 
     return String(value)
         .replace(/-/g, " ")
-        .replace(/\b\w/g, letter =>
-            letter.toUpperCase()
+        .replace(
+            /\b\w/g,
+            function (letter) {
+
+                return letter.toUpperCase();
+
+            }
         );
 
 }
@@ -700,14 +607,35 @@ function formatText(value) {
 function createSchemeCard(scheme) {
 
     const card =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
 
     card.className =
         "scheme-card";
 
 
-    if (!scheme.hardEligible) {
+    /* -----------------------------------------------------
+       ELIGIBILITY
+    ----------------------------------------------------- */
+
+    /*
+       Backend may send hardEligible.
+
+       If it doesn't, assume the backend result
+       is already eligible because it returned it.
+    */
+
+    const hardEligible =
+        scheme.hardEligible !== undefined
+            ? Boolean(
+                scheme.hardEligible
+            )
+            : true;
+
+
+    if (!hardEligible) {
 
         card.classList.add(
             "not-eligible"
@@ -716,11 +644,25 @@ function createSchemeCard(scheme) {
     }
 
 
-    const match =
-        getMatchLabel(
-            scheme.match
+    /* -----------------------------------------------------
+       MATCH
+    ----------------------------------------------------- */
+
+    const matchValue =
+        Number(
+            scheme.match || 0
         );
 
+
+    const match =
+        getMatchLabel(
+            matchValue
+        );
+
+
+    /* -----------------------------------------------------
+       REASONS
+    ----------------------------------------------------- */
 
     const reasons =
         getMatchReasons(
@@ -733,62 +675,131 @@ function createSchemeCard(scheme) {
 
             ? reasons
                 .map(
-                    reason => `
-                        <div class="scheme-reason">
-                            <i class="fa-solid ${reason.icon}"></i>
-                            <span>${reason.text}</span>
-                        </div>
-                    `
+                    function (reason) {
+
+                        return `
+
+                            <div class="scheme-reason">
+
+                                <i class="fa-solid ${reason.icon}"></i>
+
+                                <span>
+                                    ${reason.text}
+                                </span>
+
+                            </div>
+
+                        `;
+
+                    }
                 )
                 .join("")
 
             : `
+
                 <div class="scheme-reason muted">
+
                     <i class="fa-solid fa-circle-info"></i>
-                    <span>Review eligibility requirements</span>
+
+                    <span>
+                        Review eligibility requirements
+                    </span>
+
                 </div>
+
             `;
 
 
+    /* -----------------------------------------------------
+       SUPPORT TAGS
+    ----------------------------------------------------- */
+
     const supportTags =
-        Array.isArray(scheme.support)
+        Array.isArray(
+            scheme.support
+        )
 
             ? scheme.support
-                .slice(0, 3)
+                .slice(
+                    0,
+                    3
+                )
                 .map(
-                    support => `
-                        <span class="scheme-tag">
-                            ${formatText(support)}
-                        </span>
-                    `
+                    function (support) {
+
+                        return `
+
+                            <span class="scheme-tag">
+
+                                ${formatText(
+                                    support
+                                )}
+
+                            </span>
+
+                        `;
+
+                    }
                 )
                 .join("")
 
             : "";
 
 
+    /* -----------------------------------------------------
+       BENEFITS
+    ----------------------------------------------------- */
+
     const benefits =
-        Array.isArray(scheme.benefits)
+        Array.isArray(
+            scheme.benefits
+        ) &&
+        scheme.benefits.length > 0
 
             ? scheme.benefits
-                .slice(0, 3)
+                .slice(
+                    0,
+                    3
+                )
                 .map(
-                    benefit => `
-                        <li>
-                            <i class="fa-solid fa-check"></i>
-                            <span>${benefit}</span>
-                        </li>
-                    `
+                    function (benefit) {
+
+                        return `
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                <span>
+                                    ${benefit}
+                                </span>
+
+                            </li>
+
+                        `;
+
+                    }
                 )
                 .join("")
 
             : `
+
                 <li>
+
                     <i class="fa-solid fa-check"></i>
-                    <span>Government support available</span>
+
+                    <span>
+                        Government support available
+                    </span>
+
                 </li>
+
             `;
 
+
+    /* =====================================================
+       CARD HTML
+    ===================================================== */
 
     card.innerHTML = `
 
@@ -808,7 +819,12 @@ function createSchemeCard(scheme) {
                 </span>
 
                 <span>
-                    ${scheme.category || "Government Scheme"}
+
+                    ${
+                        scheme.category ||
+                        "Government Scheme"
+                    }
+
                 </span>
 
             </div>
@@ -834,17 +850,28 @@ function createSchemeCard(scheme) {
         <div class="scheme-card-heading">
 
             <h3>
-                ${scheme.name}
+
+                ${
+                    scheme.name ||
+                    "Government Scheme"
+                }
+
             </h3>
+
 
             ${
                 scheme.shortName
                     ? `
+
                         <span class="scheme-short-name">
+
                             ${scheme.shortName}
+
                         </span>
+
                     `
                     : ""
+
             }
 
         </div>
@@ -870,11 +897,13 @@ function createSchemeCard(scheme) {
 
                 <div
                     class="match-ring"
-                    style="--match:${scheme.match}%"
+                    style="--match:${matchValue}%"
                 >
 
                     <span>
-                        ${scheme.match}%
+
+                        ${matchValue}%
+
                     </span>
 
                 </div>
@@ -885,15 +914,26 @@ function createSchemeCard(scheme) {
             <div class="match-content">
 
                 <span class="match-eyebrow">
+
                     PERSONALIZED MATCH
+
                 </span>
 
-                <strong class="match-title ${match.className}">
+
+                <strong
+                    class="match-title ${match.className}"
+                >
+
                     ${match.text}
+
                 </strong>
 
+
                 <span class="match-description">
-                    Based on your profile and requirements
+
+                    Ranked using your profile
+                    and scheme requirements
+
                 </span>
 
             </div>
@@ -913,6 +953,7 @@ function createSchemeCard(scheme) {
 
             </div>
 
+
             <div class="scheme-reasons-list">
 
                 ${reasonHTML}
@@ -927,13 +968,16 @@ function createSchemeCard(scheme) {
         ${
             supportTags
                 ? `
+
                     <div class="scheme-tags">
 
                         ${supportTags}
 
                     </div>
+
                 `
                 : ""
+
         }
 
 
@@ -970,8 +1014,11 @@ function createSchemeCard(scheme) {
             >
 
                 <span>
+
                     View Scheme Details
+
                 </span>
+
 
                 <i class="fa-solid fa-arrow-right"></i>
 
@@ -998,17 +1045,44 @@ function createSchemeCard(scheme) {
             "click",
             function () {
 
+                /*
+                   Save the ID.
+
+                   scheme-details.js uses:
+
+                   selectedSchemeId
+                */
+
                 localStorage.setItem(
+
                     "selectedSchemeId",
-                    String(scheme.id)
+
+                    String(
+                        scheme.id
+                    )
+
                 );
 
+
+                /*
+                   Also save the complete selected
+                   scheme as a backup.
+                */
 
                 localStorage.setItem(
+
                     "selectedScheme",
-                    JSON.stringify(scheme)
+
+                    JSON.stringify(
+                        scheme
+                    )
+
                 );
 
+
+                /*
+                   Go to details page.
+                */
 
                 window.location.href =
                     "scheme-details.html";
@@ -1031,7 +1105,7 @@ function createSchemeCard(scheme) {
 
     if (bookmark) {
 
-        const savedSchemes =
+        let savedSchemes =
             JSON.parse(
                 localStorage.getItem(
                     "schemeSaathiSavedSchemes"
@@ -1039,13 +1113,22 @@ function createSchemeCard(scheme) {
             );
 
 
+        const schemeId =
+            String(
+                scheme.id
+            );
+
+
         if (
             savedSchemes.includes(
-                String(scheme.id)
+                schemeId
             )
         ) {
 
-            bookmark.classList.add("saved");
+            bookmark.classList.add(
+                "saved"
+            );
+
 
             bookmark.innerHTML =
                 '<i class="fa-solid fa-bookmark"></i>';
@@ -1066,33 +1149,48 @@ function createSchemeCard(scheme) {
 
 
                 const id =
-                    String(scheme.id);
+                    String(
+                        scheme.id
+                    );
 
 
                 if (
-                    saved.includes(id)
+                    saved.includes(
+                        id
+                    )
                 ) {
 
                     saved =
                         saved.filter(
-                            item =>
-                                item !== id
+                            function (item) {
+
+                                return item !== id;
+
+                            }
                         );
+
 
                     bookmark.classList.remove(
                         "saved"
                     );
 
+
                     bookmark.innerHTML =
                         '<i class="fa-regular fa-bookmark"></i>';
 
-                } else {
+                }
 
-                    saved.push(id);
+                else {
+
+                    saved.push(
+                        id
+                    );
+
 
                     bookmark.classList.add(
                         "saved"
                     );
+
 
                     bookmark.innerHTML =
                         '<i class="fa-solid fa-bookmark"></i>';
@@ -1101,8 +1199,13 @@ function createSchemeCard(scheme) {
 
 
                 localStorage.setItem(
+
                     "schemeSaathiSavedSchemes",
-                    JSON.stringify(saved)
+
+                    JSON.stringify(
+                        saved
+                    )
+
                 );
 
             }
@@ -1120,14 +1223,13 @@ function createSchemeCard(scheme) {
    FILTER + SORT
 ========================================================= */
 
-let allResults = [];
-
-
 function getFilteredResults() {
 
     const search =
         searchInput
-            ? normalize(searchInput.value)
+            ? normalize(
+                searchInput.value
+            )
             : "";
 
 
@@ -1145,19 +1247,27 @@ function getFilteredResults() {
 
     let filtered =
         allResults.filter(
-            scheme => {
+            function (scheme) {
 
                 const searchable =
                     normalize(
-                        `${scheme.name || ""}
-                         ${scheme.category || ""}
-                         ${scheme.description || ""}`
+                        `
+                        ${scheme.name || ""}
+
+                        ${scheme.category || ""}
+
+                        ${scheme.description || ""}
+
+                        ${scheme.shortName || ""}
+                        `
                     );
 
 
                 const matchesSearch =
                     !search ||
-                    searchable.includes(search);
+                    searchable.includes(
+                        search
+                    );
 
 
                 const matchesCategory =
@@ -1174,38 +1284,80 @@ function getFilteredResults() {
         );
 
 
+    /* -----------------------------------------------------
+       SORT
+    ----------------------------------------------------- */
+
     if (sort === "name") {
 
         filtered.sort(
-            (a, b) =>
-                String(a.name)
-                    .localeCompare(
-                        String(b.name)
+            function (a, b) {
+
+                return String(
+                    a.name || ""
+                ).localeCompare(
+                    String(
+                        b.name || ""
                     )
+                );
+
+            }
         );
 
-    } else if (sort === "benefits") {
+    }
+
+    else if (sort === "benefits") {
 
         filtered.sort(
-            (a, b) =>
-                (
-                    Array.isArray(b.benefits)
+            function (a, b) {
+
+                const bBenefits =
+                    Array.isArray(
+                        b.benefits
+                    )
                         ? b.benefits.length
-                        : 0
-                )
-                -
-                (
-                    Array.isArray(a.benefits)
+                        : 0;
+
+
+                const aBenefits =
+                    Array.isArray(
+                        a.benefits
+                    )
                         ? a.benefits.length
-                        : 0
-                )
+                        : 0;
+
+
+                return (
+                    bBenefits -
+                    aBenefits
+                );
+
+            }
         );
 
-    } else {
+    }
+
+    else {
+
+        /*
+           DEFAULT:
+
+           Highest personalized match first.
+        */
 
         filtered.sort(
-            (a, b) =>
-                b.match - a.match
+            function (a, b) {
+
+                return (
+                    Number(
+                        b.match || 0
+                    ) -
+                    Number(
+                        a.match || 0
+                    )
+                );
+
+            }
         );
 
     }
@@ -1223,7 +1375,9 @@ function getFilteredResults() {
 function renderResults() {
 
     if (!resultsList) {
+
         return;
+
     }
 
 
@@ -1258,13 +1412,94 @@ function renderResults() {
     }
 
 
+    /*
+       IMPORTANT:
+
+       NO .slice(0, 5)
+
+       NO LIMIT
+
+       ALL BACKEND RESULTS
+       ARE DISPLAYED.
+    */
+
     filtered.forEach(
-        scheme => {
+        function (scheme) {
 
             resultsList.appendChild(
                 createSchemeCard(
                     scheme
                 )
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   POPULATE CATEGORIES
+========================================================= */
+
+function populateCategories() {
+
+    if (!categorySelect) {
+
+        return;
+
+    }
+
+
+    const categories =
+        [
+            ...new Set(
+
+                allResults
+                    .map(
+                        function (scheme) {
+
+                            return scheme.category;
+
+                        }
+                    )
+                    .filter(Boolean)
+
+            )
+        ]
+        .sort();
+
+
+    categorySelect.innerHTML = `
+
+        <option value="all">
+
+            All Categories
+
+        </option>
+
+    `;
+
+
+    categories.forEach(
+        function (category) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                category;
+
+
+            option.textContent =
+                category;
+
+
+            categorySelect.appendChild(
+                option
             );
 
         }
@@ -1281,22 +1516,32 @@ function updateDashboard() {
 
     if (schemeCount) {
 
+        /*
+           Total number of schemes returned
+           by backend.
+        */
+
         schemeCount.textContent =
-            allResults.filter(
-                scheme =>
-                    scheme.hardEligible
-            ).length;
+            allResults.length;
 
     }
 
 
     if (matchedCount) {
 
+        /*
+           Number of strong matches.
+        */
+
         matchedCount.textContent =
             allResults.filter(
-                scheme =>
-                    scheme.hardEligible &&
-                    scheme.match >= 70
+                function (scheme) {
+
+                    return Number(
+                        scheme.match || 0
+                    ) >= 70;
+
+                }
             ).length;
 
     }
@@ -1305,7 +1550,9 @@ function updateDashboard() {
     if (supportCount) {
 
         supportCount.textContent =
-            Array.isArray(profile.support)
+            Array.isArray(
+                profile?.support
+            )
                 ? profile.support.length
                 : 0;
 
@@ -1360,29 +1607,28 @@ document.addEventListener(
 
 
         if (
-            typeof schemeDatabase ===
-            "undefined" ||
-            !Array.isArray(
-                schemeDatabase
-            )
+            allResults.length === 0
         ) {
 
-            console.error(
-                "SchemeSaathi: schemeDatabase is unavailable."
+            console.warn(
+                "SchemeSaathi: No backend results found."
             );
+
+
+            if (emptyState) {
+
+                emptyState.style.display =
+                    "block";
+
+            }
+
 
             return;
 
         }
 
 
-        allResults =
-            generateResults();
-
-
-        populateCategories(
-            allResults
-        );
+        populateCategories();
 
 
         updateDashboard();
@@ -1392,9 +1638,47 @@ document.addEventListener(
 
 
         console.log(
-            "SchemeSaathi:",
-            allResults.length,
-            "schemes loaded."
+            "================================="
+        );
+
+
+        console.log(
+            "SCHEMESAATHI RESULTS"
+        );
+
+
+        console.log(
+            "Total backend schemes:",
+            allResults.length
+        );
+
+
+        console.log(
+            "Sorted by match:"
+        );
+
+
+        console.table(
+            allResults.map(
+                function (scheme) {
+
+                    return {
+
+                        id: scheme.id,
+
+                        name: scheme.name,
+
+                        match: scheme.match
+
+                    };
+
+                }
+            )
+        );
+
+
+        console.log(
+            "================================="
         );
 
     }
