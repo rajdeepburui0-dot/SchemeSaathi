@@ -95,22 +95,28 @@ The core frontend and backend matching flow is currently implemented.
 
 ## Screen References
 
-Given below is the Index Page of the prototype
+Given below is the Index Page of this prototype:
+
 ![Index Page](<assets/Index%20page.png>)
 
-Given below is the Profile Page of the prototype
+Given below is the Profile Page of this prototype:
+
 ![Profile Page](<assets/Profile%20page.png>)
 
-Given below is the Matching Page of the prototype
+Given below is the Matching Page of this prototype:
+
 ![Matching Page](<assets/Matching%20page.png>)
 
-Given below is the Result Page of the prototype
+Given below is the Result Page of this prototype:
+
 ![Result Page](<assets/Result%20page.png>)
 
-Given below is the Scheme-Details Page of the prototype
+Given below is the Scheme-Details Page of this prototype:
+
 ![Scheme-Details Page](<assets/Scheme-Details%20page.png>)
 
-Given below is the Compare Page of the prototype
+Given below is the Compare Page of this prototype:
+
 ![Compare Page](<assets/Compare%20page.png>)
 
 
@@ -118,7 +124,7 @@ Given below is the Compare Page of the prototype
 
 * Live Links: https://scheme-saathi-e2kn.vercel.app/
 
-* GitHub Repo: (https://github.com/rajdeepburui0-dot/SchemeSaathi.git)
+* GitHub Repo: https://github.com/rajdeepburui0-dot/SchemeSaathi.git
 
 
 ## Smart India Hackathon 2026
