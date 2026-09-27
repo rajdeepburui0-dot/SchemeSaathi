@@ -1,3 +1,4 @@
+
 /* =========================================================
    SCHEMESAATHI BACKEND SERVER
    ========================================================= */
@@ -14,7 +15,7 @@ const {
 
 const app = express();
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 
 /* =========================================================
@@ -212,7 +213,7 @@ app.post(
 
 
             console.log(
-                "Eligible schemes:",
+                "Matched schemes:",
                 recommendations.length
             );
 
@@ -278,50 +279,73 @@ app.use(
 
 
 /* =========================================================
-   START SERVER
+   LOCAL DEVELOPMENT SERVER
    ========================================================= */
 
-app.listen(
-    PORT,
-    function () {
+/*
+   When running locally:
 
-        console.log("");
+       node server.js
 
-        console.log(
-            "================================="
-        );
+   the server starts on port 5000.
 
-        console.log(
-            "      SCHEMESAATHI BACKEND"
-        );
+   When deployed on Vercel, Vercel
+   handles the server itself.
+*/
 
-        console.log(
-            "================================="
-        );
+if (require.main === module) {
 
-        console.log(
-            `Server running on http://localhost:${PORT}`
-        );
+    app.listen(
+        PORT,
+        function () {
 
-        console.log(
-            `Schemes loaded: ${schemes.length}`
-        );
+            console.log("");
 
-        console.log(
-            "Health: http://localhost:5000/api/health"
-        );
+            console.log(
+                "================================="
+            );
 
-        console.log(
-            "Schemes: http://localhost:5000/api/schemes"
-        );
+            console.log(
+                "      SCHEMESAATHI BACKEND"
+            );
 
-        console.log(
-            "Match: POST http://localhost:5000/api/match"
-        );
+            console.log(
+                "================================="
+            );
 
-        console.log(
-            "================================="
-        );
+            console.log(
+                `Server running on http://localhost:${PORT}`
+            );
 
-    }
-);
+            console.log(
+                `Schemes loaded: ${schemes.length}`
+            );
+
+            console.log(
+                "Health: http://localhost:5000/api/health"
+            );
+
+            console.log(
+                "Schemes: http://localhost:5000/api/schemes"
+            );
+
+            console.log(
+                "Match: POST http://localhost:5000/api/match"
+            );
+
+            console.log(
+                "================================="
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EXPORT APP FOR VERCEL
+   ========================================================= */
+
+module.exports = app;
+
