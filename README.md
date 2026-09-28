@@ -4,6 +4,14 @@
 SchemeSaathi is a personalized platform designed to help entrepreneurs discover government schemes that are relevant to their personal and business profile.
 Instead of manually searching through multiple government schemes, users provide their profile details and SchemeSaathi filters eligible schemes and ranks them according to their profile relevance.
 
+## Live Links
+
+* Live Prototype: https://scheme-saathi-e2kn.vercel.app/
+
+* Demo Video Link: https://youtu.be/6TyXeVuD7z4
+
+* GitHub Repository Link: https://github.com/rajdeepburui0-dot/SchemeSaathi
+
 ## Core Concept
 SchemeSaathi uses:
 **Rule-Based Eligibility Filtering + Weighted Matching**
@@ -25,7 +33,7 @@ USER PROFILE -> ELIGIBILITY FILTERING -> ELIGIBLE SCHEMES -> WEIGHTED MATCHING -
 7. Scheme comparison
 8. Official government portal links
 9. Backend-based scheme matching
-10. 20 government schemes records
+10. 20 government scheme records
 
 ## Technology
 
@@ -73,7 +81,6 @@ The current version includes:
 * Profile-based scheme matching
 * Hard eligibility filtering
 * Weighted match scoring
-* Ranked scheme recommendations
 * Match explanations
 * Missing requirement guidance
 * Document checklists
@@ -95,36 +102,30 @@ The core frontend and backend matching flow is currently implemented.
 
 ## Screen References
 
-Given below is the Index Page of this prototype:
+### Home Page
 
 ![Index Page](<assets/Index%20page.png>)
 
-Given below is the Profile Page of this prototype:
+### Profile Page 
 
 ![Profile Page](<assets/Profile%20page.png>)
 
-Given below is the Matching Page of this prototype:
+### Matching Page
 
 ![Matching Page](<assets/Matching%20page.png>)
 
-Given below is the Result Page of this prototype:
+### Result Page
 
 ![Result Page](<assets/Result%20page.png>)
 
-Given below is the Scheme-Details Page of this prototype:
+### Scheme Details
 
 ![Scheme-Details Page](<assets/Scheme-Details%20page.png>)
 
-Given below is the Compare Page of this prototype:
+### Compare Page
 
 ![Compare Page](<assets/Compare%20page.png>)
 
-
-## Live Links
-
-* Live Links: https://scheme-saathi-e2kn.vercel.app/
-
-* GitHub Repo: https://github.com/rajdeepburui0-dot/SchemeSaathi.git
 
 
 ## Smart India Hackathon 2026
@@ -132,3 +133,5 @@ Given below is the Compare Page of this prototype:
 **Project:** AI-Driven Scheme Matching for Marginalized Entrepreneurs
 
 **Theme:** Smart Automation
+
+**Team:** Jupitex
