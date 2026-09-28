@@ -8,9 +8,9 @@ Instead of manually searching through multiple government schemes, users provide
 
 * Live Prototype: https://scheme-saathi-e2kn.vercel.app/
 
-* Demo Video Link: https://youtu.be/6TyXeVuD7z4
+* Demo Video: https://youtu.be/6TyXeVuD7z4
 
-* GitHub Repository Link: https://github.com/rajdeepburui0-dot/SchemeSaathi
+* GitHub Repository: https://github.com/rajdeepburui0-dot/SchemeSaathi
 
 ## Core Concept
 SchemeSaathi uses:
